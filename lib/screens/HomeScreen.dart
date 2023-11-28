@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:restart/screens/add_screen.dart';
+import 'package:restart/stat_page_tab.dart';
 import 'package:restart/widgets/Button/calendar_button.dart';
 import 'package:restart/widgets/month_picker.dart';
 import 'package:restart/widgets/tab_selector.dart';
@@ -218,6 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final todayDate = '${DateFormat.Md().format(today)}';
     final weekDate = getWeekDate();
     final yearDate = '${today.year}';
+    var size =MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: _currentIndex == 0
@@ -453,30 +455,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-              TabBar(
-                indicatorColor: Colors.redAccent,
-                unselectedLabelColor: Colors.grey.shade500,
-                labelColor: Colors.black,
-                tabs: [
-                  Tab(text: 'Income'),
-                  Tab(text: 'Expense'),
-                ],
-              ),
-              DefaultTabController(
-                length: 2,
-                child: TabBarView(
-                   children: [
-                     Center(child: Text('Income')),
-                     Center(child: Text('Expense')),
-                   ],
-                )
+              SizedBox(
+                width:size.width,height: size.height*0.45,
+                child: DefaultTabController(
+                  length: 2,
+                  child: Column(
+                    children: [
+                      TabBar(
+                        indicatorColor: Colors.redAccent,
+                        unselectedLabelColor: Colors.grey.shade500,
+                        labelColor: Colors.black,
+                         tabs: [
+                           Tab( text: 'Income'),
+                           Tab( text: 'Expense'),
+                         ],
+                      ),
+                      TabBarView(
+                          children: [
+                            Center(child: Text('Income')),
+                            Center(child: Text('Expense')),
+                          ],
+                      ),
+                    ],
+                  )
+                ),
               ),
             ],
           ),
         ),
-        Container(
-          child: Text('data'),
-        ),
+        AccountTab(),
         Container(
           child: Text('data'),
         ),
