@@ -350,8 +350,8 @@ class _AddScreenState extends State<AddScreen> {
                         width: 237,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pop(context);
                             _addTransaction();
+                            Navigator.of(context).pop();
                           },
                           child: Text(
                             'Save',

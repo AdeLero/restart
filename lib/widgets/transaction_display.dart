@@ -126,67 +126,74 @@ class _TransactionDisplayState extends State<TransactionDisplay> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     color: Colors.white,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: dayTransactions.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 100.0,
-                                    child: Row(
+                    child: Expanded(
+                      child: ValueListenableBuilder<List<Transaction>>(
+                        valueListenable: allTransactions,
+                        builder: (context, transactions, child) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: dayTransactions.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
                                       children: [
-                                        Icon(
-                                          dayTransactions[index]
-                                              .selectedCategory
-                                              ?.icon,
-                                          size: 15.0,
-                                          color: Colors.black,
-                                        ),
-                                        SizedBox(width: 5),
                                         Container(
-                                          width: 70,
-                                          child: Text(
-                                            '${dayTransactions[index].selectedCategory.label}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: Colors.black45,
-                                              fontWeight: FontWeight.w400,
-                                            ),
+                                          width: 100.0,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                dayTransactions[index]
+                                                    .selectedCategory
+                                                    ?.icon,
+                                                size: 15.0,
+                                                color: Colors.black,
+                                              ),
+                                              SizedBox(width: 5),
+                                              Container(
+                                                width: 70,
+                                                child: Text(
+                                                  '${dayTransactions[index].selectedCategory.label}',
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    color: Colors.black45,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          '${dayTransactions[index].selectedAccount.label}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black45,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '${dayTransactions[index].selectedAccount.label}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black45,
+                                    Text(
+                                      '\u20A6${dayTransactions[index].amount}',
+                                      style: TextStyle(
+                                        color: dayTransactions[index].type?.color,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '\u20A6${dayTransactions[index].amount}',
-                                style: TextStyle(
-                                  color: dayTransactions[index].type?.color,
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Container(
